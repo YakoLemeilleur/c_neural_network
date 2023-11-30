@@ -155,11 +155,11 @@ double network_predict_imgs(NeuralNetwork* net, Img** imgs, int n) {
 	int n_correct = 0;
 	for (int i = 0; i < n; i++) {
 		Matrix* prediction = network_predict_img(net, imgs[i]);
-		img_print(imgs[i]);
-		for(int j = 0; j < 10; j++) {
-			printf("prediction[%d] = %lf\n", j, prediction->entries[j][0]);
-		}
-		printf("prediction is : %d\n", matrix_argmax(prediction));
+//		img_print(imgs[i]);
+//		for(int j = 0; j < 10; j++) {
+//			printf("prediction[%d] = %lf\n", j, prediction->entries[j][0]);
+//		}
+//		printf("prediction is : %d\n", matrix_argmax(prediction));
 		if (matrix_argmax(prediction) == imgs[i]->label) {
 			n_correct++;
 		}
@@ -236,7 +236,15 @@ void network_print(NeuralNetwork* net) {
 	printf("# of Hidden: %d\n", net->hidden);
 	printf("# of Output: %d\n", net->output);
 	printf("Hidden Weights: \n");
-	matrix_print(net->hidden_weights);
+	for (int i = 0; i < 100; i++) {
+		Matrix* new = matrix_create(28,28);
+		for (int j = 0; j < 784; j++) {
+			new->entries[i/28][j%28] = net->hidden_weights->entries[i][j];
+		}
+		matrix_print(new);
+		matrix_free(new);
+	}
+//	matrix_print(net->hidden_weights);
 	printf("Output Weights: \n");
 	matrix_print(net->output_weights);
 }

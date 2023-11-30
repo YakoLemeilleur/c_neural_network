@@ -45,22 +45,23 @@ int main() {
 		if(*is_training) {
 			//TRAINING
 			int number_imgs = 10000;
-			Img** imgs = csv_to_imgs("./data/mnist_test.csv", number_imgs);
+			Img** imgs = csv_to_imgs("./data/mnist_train.csv", number_imgs);
 			
-			NeuralNetwork* net = network_create(784, 300, 10, 0.1);
+			NeuralNetwork* net = network_create(784, 100, 10, 0.1);
 			network_train_batch_imgs(net, imgs, number_imgs);
+			network_print(net);
 			network_save(net, "testing_net");
 		}
 		else {
 			//	PREDICTING
-			int number_imgs = 12;
-			Img** imgs = csv_to_imgs("data/result.csv", number_imgs);
+			int number_imgs = 3000;
+			Img** imgs = csv_to_imgs("data/mnist_test.csv", number_imgs);
 //			img_print(imgs[0]);
-			imgs[12] = png_to_img("test.png");
+			//imgs[12] = png_to_img("test.png");
 			NeuralNetwork* net = network_load("testing_net");
-			double score = network_predict_imgs(net, imgs, number_imgs+1);
+			double score = network_predict_imgs(net, imgs, number_imgs);
 			printf("Score: %1.5f\n", score);
-			imgs_free(imgs, number_imgs+1);
+			imgs_free(imgs, number_imgs);
 			network_free(net);
 			//
 		}

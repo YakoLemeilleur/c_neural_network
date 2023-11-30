@@ -28,7 +28,7 @@ Img** csv_to_imgs(char* file_string, int number_of_imgs) {
 			if (j == 0) {
 				imgs[i]->label = atoi(token);
 			} else {
-				imgs[i]->img_data->entries[(j-1) / 28][(j-1) % 28] = atoi(token) / 256.0;//> 125 ? 1 : 0;/// 256.0;
+				imgs[i]->img_data->entries[(j-1) / 28][(j-1) % 28] = atoi(token) > 125 ? 1 : 0;/// 256.0;
 			}
 			token = strtok(NULL, ",");
 			j++;
@@ -69,7 +69,7 @@ Img* png_to_img(char* file_string) {
 		{
 			Uint8 r, g, b;
 			SDL_GetRGB(pixels[i*surface->w+j], surface->format, &r, &g, &b);
-			res->img_data->entries[i][j] = r /256.0;//> 125 ? 1 : 0;///252;
+			res->img_data->entries[i][j] = r > 125 ? 1 : 0;///252;
 		}
 	}
 	SDL_UnlockSurface(surface);
