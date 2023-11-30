@@ -26,11 +26,15 @@ void test_neural_network(NeuralNetwork* net){
 void test_neural_network_img(NeuralNetwork* net, char* path) {
 	Img* img = png_to_img("../test.png");
 	img_print(img);
-	Matrix* prediction = network_predict_img(net, img);
-	for (int i = 0; i < prediction->rows; i++) {
-		printf("prediction[%d] = %lf\n", i, prediction->entries[i][0]);
-	}
-	printf("The predicted number is : %d\n", matrix_argmax(prediction));
+	Img** imgs = malloc(sizeof(Img*));
+	imgs[0] = img;
+	double score = network_predict_imgs(net, imgs, 1);
+	//Matrix* prediction = network_predict_img(net, img);
+//	for (int i = 0; i < prediction->rows; i++) {
+//		printf("prediction[%d] = %lf\n", i, prediction->entries[i][0]);
+//	}
+//	printf("The predicted number is : %d\n", matrix_argmax(prediction));
+	printf("score: %lf\n", score);
 	img_free(img);
 }
 

@@ -63,7 +63,6 @@ Img* png_to_img(char* file_string) {
 	if(SDL_LockSurface(surface) != 0) {
 		errx(EXIT_FAILURE,"%s",SDL_GetError());
 	}
-	printf("w: %d\nh: %d\n", surface->w, surface->h);
 	for (int i = 0; i < surface->w; i++)
 	{
 		for (int j = 0; j < surface->h; j++)
