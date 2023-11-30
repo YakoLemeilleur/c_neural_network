@@ -39,27 +39,24 @@ void test_neural_network_img(NeuralNetwork* net, char* path) {
 */
 int main() {
 	srand(time(NULL));
-	int* choice = malloc(sizeof(int));
-	scanf("%d", choice);
-	if(*choice == 42) {
 		int* is_training = malloc(sizeof(int));
 		printf("Train(1) or Predict(0) ?\n");
 		scanf("%d",is_training);
 		if(*is_training) {
 			//TRAINING
 			int number_imgs = 10000;
-			Img** imgs = csv_to_imgs("./data/mnist_train.csv", number_imgs);
+			Img** imgs = csv_to_imgs("./data/mnist_test.csv", number_imgs);
 			
-			NeuralNetwork* net = network_create(784, 400, 10, 0.1);
+			NeuralNetwork* net = network_create(784, 300, 10, 0.1);
 			network_train_batch_imgs(net, imgs, number_imgs);
 			network_save(net, "testing_net");
 		}
 		else {
 			//	PREDICTING
-			int number_imgs = 3;
+			int number_imgs = 12;
 			Img** imgs = csv_to_imgs("data/result.csv", number_imgs);
 //			img_print(imgs[0]);
-			imgs[3] = png_to_img("test.png");
+			imgs[12] = png_to_img("test.png");
 			NeuralNetwork* net = network_load("testing_net");
 			double score = network_predict_imgs(net, imgs, number_imgs+1);
 			printf("Score: %1.5f\n", score);
@@ -67,7 +64,7 @@ int main() {
 			network_free(net);
 			//
 		}
-	}
+	
 /*	else {
 		int* is_training = malloc(sizeof(int));
 		printf("Train(1) or Predict(0) ?\n");
