@@ -9,7 +9,7 @@
 
 Img** csv_to_imgs(char* file_string, int number_of_imgs) {
 	FILE *fp;
-	Img** imgs = malloc(number_of_imgs * sizeof(Img*));
+	Img** imgs = malloc((number_of_imgs+1) * sizeof(Img*));
 	char row[MAXCHAR];
 	fp = fopen(file_string, "r");
 
