@@ -16,6 +16,7 @@ Img** csv_to_imgs(char* file_string, int number_of_imgs) {
 	// Read the first line 
 	fgets(row, MAXCHAR, fp);
 	int i = 0;
+	printf("here\n");
 	while (feof(fp) != 1 && i < number_of_imgs) {
 		imgs[i] = malloc(sizeof(Img));
 
@@ -53,22 +54,23 @@ SDL_Surface* load_image(const char* path)
 
 
 Img* png_to_img(char* file_string) {
-	FILE * fp;
 	Img* res = malloc(sizeof(Img));
 	res->img_data = matrix_create(28,28);
+	res->label = 0;
 	SDL_Surface* surface = load_image(file_string);
 	Uint32* pixels = surface->pixels;
 	SDL_PixelFormat* format = surface->format;
 	if(SDL_LockSurface(surface) != 0) {
 		errx(EXIT_FAILURE,"%s",SDL_GetError());
 	}
+	printf("w: %d\nh: %d\n", surface->w, surface->h);
 	for (int i = 0; i < surface->w; i++)
 	{
 		for (int j = 0; j < surface->h; j++)
 		{
 			Uint8 r, g, b;
 			SDL_GetRGB(pixels[i*surface->w+j], surface->format, &r, &g, &b);
-			res->img_data->entries[i][j] = r/255;
+			res->img_data->entries[i][j] = r > 125 ? 1 : 0;///252;
 		}
 	}
 	SDL_UnlockSurface(surface);

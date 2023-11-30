@@ -53,15 +53,20 @@ int main() {
 		}
 		else {
 			//	PREDICTING
-			int number_imgs = 3000;
-			Img** imgs = csv_to_imgs("data/mnist_test.csv", number_imgs);
+			int number_imgs = 3;
+			Img** imgs = csv_to_imgs("data/result.csv", number_imgs);
 //			img_print(imgs[0]);
 			NeuralNetwork* net = network_load("testing_net");
-			double score = network_predict_imgs(net, imgs, 3000);
+			double score = network_predict_imgs(net, imgs, number_imgs);
 			printf("Score: %1.5f\n", score);
 			//printf("Now you can test your own images: please enter the path of the image you want to predict\n");
 			//char path[40];
 			//scanf("%s",path);
+//			printf("Single test\n");
+//			Img **imgs = csv_to_imgs("data/training.csv", 1);
+	//		printf("after csv to img\n");
+	//		double test = network_predict_imgs(net,imgs,1);
+	//		printf("Score: %1.5f\n", test);
 			test_neural_network_img(net, "./test.png");
 			imgs_free(imgs, number_imgs);
 			network_free(net);
