@@ -34,3 +34,4 @@ double network_test(NeuralNetwork *net, Img **imgs, size_t n_imgs);
 double network_test_xor(NeuralNetwork *net, Img **imgs, size_t n_imgs);
 NeuralNetwork* network_load(char* file_string);
 void network_save(NeuralNetwork* net, char* file_string);
+int** network_predict_full_sudoku(NeuralNetwork* net, Img** imgs, size_t n_imgs);

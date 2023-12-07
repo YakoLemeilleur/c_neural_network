@@ -73,6 +73,27 @@ Matrix* network_predict(NeuralNetwork* net, Img* img)
     return normalized;
 }
 
+int** network_predict_full_sudoku(NeuralNetwork* net, Img** imgs, size_t n_imgs)
+{
+    if (n_imgs != 81)
+    {
+        errx(EXIT_FAILURE, "Invalid number of images.");
+    }
+
+    int** result = malloc(9 * sizeof(int*));
+	for (int i = 0; i < 9; i++) {
+		result[i] = malloc(9 * sizeof(int));
+	}
+    for (size_t i = 0; i < 81; i++)
+    {
+        Matrix *prediction = network_predict(net, imgs[i]);
+        result[i / 9][i % 9] = matrix_argmax(prediction);
+        matrix_free(prediction);
+    }
+
+    return result;
+}
+
 void network_train(NeuralNetwork *net, Img** imgs, size_t n_imgs, size_t epoch)
 {
     Img* flattened = malloc(sizeof(Img));
